@@ -159,6 +159,41 @@ class Scratch3YourExtension {
                 },
                 {
                     // name of the function where your block code lives
+                    opcode: 'setPos',
+
+                    blockType: BlockType.REPORTER,
+
+                    // label to display on the block
+                    text: 'Move to [X] [Y] [Z]',
+
+                    // true if this block should end a stack
+                    terminal: false,
+
+                    // where this block should be available for code - choose from:
+                    //   TargetType.SPRITE - for code in sprites
+                    //   TargetType.STAGE  - for code on the stage / backdrop
+                    // remove one of these if this block doesn't apply to both
+                    filter: [ TargetType.SPRITE, TargetType.STAGE ],
+
+                    // arguments used in the block
+                    arguments: {
+                        X: {
+                            // default value before the user sets something
+                            defaultValue: 0,
+                             type: ArgumentType.NUMBER
+                        },
+                        Y: {
+                            defaultValue: 0,
+                            type: ArgumentType.NUMBER
+                        },
+                        Z: {
+                            defaultValue: 0,
+                            type: ArgumentType.NUMBER
+                        }
+                    }
+                },
+                {
+                    // name of the function where your block code lives
                     opcode: 'getPosX',
 
                     blockType: BlockType.REPORTER,
@@ -250,6 +285,21 @@ class Scratch3YourExtension {
     .catch((e) => {console.log("ERROR :"+e); 
                     return false;});
     }
+
+         setPos ({ X, Y, Z }) {
+  return fetch('http://localhost:5000/setPos?x=' + X+"&y="+Y+"&z="+Z)
+    .then((response) => {
+        const data = response.json();
+        return data;
+         })
+    .then((data) => {
+        console.log(data);
+        if (data.hasOwnProperty("msg")) 
+            return data["msg"];})
+    .catch((e) => {console.log("ERROR :"+e); 
+                    return false;});
+    }
+
 
          getPosX () {
   return fetch('http://localhost:5000/getPos')
