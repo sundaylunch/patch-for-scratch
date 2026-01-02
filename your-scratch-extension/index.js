@@ -161,7 +161,7 @@ class Scratch3YourExtension {
                     // name of the function where your block code lives
                     opcode: 'setPos',
 
-                    blockType: BlockType.REPORTER,
+                    blockType: BlockType.COMMAND,
 
                     // label to display on the block
                     text: 'Move to [X] [Y] [Z]',
@@ -189,6 +189,41 @@ class Scratch3YourExtension {
                         Z: {
                             defaultValue: 0,
                             type: ArgumentType.NUMBER
+                        }
+                    }
+                },
+                             {
+                    // name of the function where your block code lives
+                    opcode: 'setBlock',
+
+                    blockType: BlockType.COMMAND,
+
+                    // label to display on the block
+                    text: 'Place [BLOCK] at [X] [Y] [Z]',
+
+                    // true if this block should end a stack
+                    terminal: false,
+
+                    filter: [ TargetType.SPRITE, TargetType.STAGE ],
+                     arguments: {
+                        X: {
+                            // default value before the user sets something
+                            defaultValue: 0,
+                             type: ArgumentType.NUMBER
+                        },
+                        Y: {
+                            defaultValue: 0,
+                            type: ArgumentType.NUMBER
+                        },
+                        Z: {
+                            defaultValue: 0,
+                            type: ArgumentType.NUMBER
+                        },
+                        BLOCK: {
+                            type: ArgumentType.NUMBER,
+                            menu: 'BLOCKS',
+                            defaultValue: 1
+
                         }
                     }
                 },
@@ -234,7 +269,31 @@ class Scratch3YourExtension {
 
                     filter: [ TargetType.SPRITE, TargetType.STAGE ]
                 }
-            ]
+            ],
+
+            // Optional: define extension-specific menus here.
+        menus: {
+            // Required: an identifier for this menu, unique within this extension.
+            BLOCKS: [
+                // Static menu: list items which should appear in the menu.
+                {
+                    // Required: the value of the menu item when it is chosen.
+                    value: 3,
+                    // Optional: the human-readable label for this item.
+                    // Use `value` as the text if this is absent.
+                    text: 'DIRT'
+                },
+                {
+                    value: 1,
+                    text: 'STONE'
+                }
+
+            ],
+
+            // Dynamic menu: a string naming a function which returns an array as above.
+            // Called each time the menu is opened.
+            menuB: 'getItemsForMenuB'
+        },
         };
     }
 
@@ -282,6 +341,20 @@ class Scratch3YourExtension {
         console.log(data);
         if (data.hasOwnProperty("id")) 
             return data["id"];})
+    .catch((e) => {console.log("ERROR :"+e); 
+                    return false;});
+    }
+
+         setBlock ({ X, Y, Z, BLOCK }) {
+  return fetch('http://localhost:5000/setBlock?x=' + X+"&y="+Y+"&z="+Z+"&block="+BLOCK)
+    .then((response) => {
+        const data = response.json();
+        return data;
+         })
+    .then((data) => {
+        console.log(data);
+        if (data.hasOwnProperty("msg")) 
+            return data["msg"];})
     .catch((e) => {console.log("ERROR :"+e); 
                     return false;});
     }
