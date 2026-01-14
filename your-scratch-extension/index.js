@@ -9,7 +9,7 @@ class Scratch3YourExtension {
     }
 
     /**
-     * Returns the metadata about your extension.
+     * @returns {object} Returns the metadata about your extension.
      */
     getInfo () {
         return {
@@ -192,7 +192,7 @@ class Scratch3YourExtension {
                         }
                     }
                 },
-                             {
+                {
                     // name of the function where your block code lives
                     opcode: 'setBlock',
 
@@ -223,6 +223,137 @@ class Scratch3YourExtension {
                             type: ArgumentType.NUMBER,
                             menu: 'BLOCKS',
                             defaultValue: 1
+
+                        }
+                    }
+                },
+                {
+                    // name of the function where your block code lives
+                    opcode: 'setBlocks',
+
+                    blockType: BlockType.COMMAND,
+
+                    // label to display on the block
+                    text: 'Place [BLOCK] from [X] [Y] [Z] to [X1] [Y1] [Z1]',
+
+                    // true if this block should end a stack
+                    terminal: false,
+
+                    filter: [ TargetType.SPRITE, TargetType.STAGE ],
+                     arguments: {
+                        X: {
+                            // default value before the user sets something
+                            defaultValue: 0,
+                             type: ArgumentType.NUMBER
+                        },
+                        Y: {
+                            defaultValue: 0,
+                            type: ArgumentType.NUMBER
+                        },
+                        Z: {
+                            defaultValue: 0,
+                            type: ArgumentType.NUMBER
+                        },
+                              X1: {
+                            // default value before the user sets something
+                            defaultValue: 0,
+                             type: ArgumentType.NUMBER
+                        },
+                        Y1: {
+                            defaultValue: 0,
+                            type: ArgumentType.NUMBER
+                        },
+                        Z1: {
+                            defaultValue: 0,
+                            type: ArgumentType.NUMBER
+                        },
+                        BLOCK: {
+                            type: ArgumentType.NUMBER,
+                            menu: 'BLOCKS',
+                            defaultValue: 1
+
+                        }
+                    }
+                },
+                {
+                    // name of the function where your block code lives
+                    opcode: 'setWoolwithData',
+
+                    blockType: BlockType.COMMAND,
+
+                    // label to display on the block
+                    text: 'Place [WOOL] Wool at [X] [Y] [Z]',
+
+                    // true if this block should end a stack
+                    terminal: false,
+
+                    filter: [ TargetType.SPRITE, TargetType.STAGE ],
+                     arguments: {
+                        X: {
+                            // default value before the user sets something
+                            defaultValue: 0,
+                             type: ArgumentType.NUMBER
+                        },
+                        Y: {
+                            defaultValue: 0,
+                            type: ArgumentType.NUMBER
+                        },
+                        Z: {
+                            defaultValue: 0,
+                            type: ArgumentType.NUMBER
+                        },
+                        WOOL: {
+                            type: ArgumentType.NUMBER,
+                            menu: 'WOOLS',
+                            defaultValue: 0
+
+                        }
+                    }
+                },
+                {
+                    // name of the function where your block code lives
+                    opcode: 'setWoolcubewithData',
+
+                    blockType: BlockType.COMMAND,
+
+                    // label to display on the block
+                    text: 'Place [WOOL] Wool from [X] [Y] [Z] to [X1] [Y1] [Z1]',
+
+                    // true if this block should end a stack
+                    terminal: false,
+
+                    filter: [ TargetType.SPRITE, TargetType.STAGE ],
+                     arguments: {
+                        X: {
+                            // default value before the user sets something
+                            defaultValue: 0,
+                             type: ArgumentType.NUMBER
+                        },
+                        Y: {
+                            defaultValue: 0,
+                            type: ArgumentType.NUMBER
+                        },
+                        Z: {
+                            defaultValue: 0,
+                            type: ArgumentType.NUMBER
+                        },
+                                 X1: {
+                            // default value before the user sets something
+                            defaultValue: 0,
+                             type: ArgumentType.NUMBER
+                        },
+                        Y1: {
+                            defaultValue: 0,
+                            type: ArgumentType.NUMBER
+                        },
+                        Z1: {
+                            defaultValue: 0,
+                            type: ArgumentType.NUMBER
+                        },
+                        WOOL: {
+                            type: ArgumentType.NUMBER,
+                            menu: 'WOOLS',
+                            defaultValue: 0
 
                         }
                     }
@@ -274,8 +405,26 @@ class Scratch3YourExtension {
             // Optional: define extension-specific menus here.
         menus: {
             // Required: an identifier for this menu, unique within this extension.
-            BLOCKS: [
+            BLOCKS: {
+                acceptReporters: true,
+                    items:
+                [
                 // Static menu: list items which should appear in the menu.
+                {
+                    value: 0,
+                    text: 'AIR'
+                },
+                {
+                    value: 1,
+                    text: 'STONE'
+                },
+                {
+                    // Required: the value of the menu item when it is chosen.
+                    value: 2,
+                    // Optional: the human-readable label for this item.
+                    // Use `value` as the text if this is absent.
+                    text: 'GRASS'
+                },
                 {
                     // Required: the value of the menu item when it is chosen.
                     value: 3,
@@ -283,17 +432,126 @@ class Scratch3YourExtension {
                     // Use `value` as the text if this is absent.
                     text: 'DIRT'
                 },
+                  {
+                    value: 4,
+                    text: 'COBBLESTONE'
+                },
                 {
-                    value: 1,
-                    text: 'STONE'
+                    value: 8,
+                    text: 'WATER'
+                },
+                {
+                    value: 12,
+                    text: 'SAND'
+                },
+                {
+                    value: 13,
+                    text: 'GRAVEL'
+                },
+                {
+                    value: 14,
+                    text: 'GOLD ORE'
+                },
+                     {
+                    value: 15,
+                    text: 'IRON ORE'
+                },
+                {
+                    value: 16,
+                    text: 'COAL ORE'
+                },
+                {
+                    value: 41,
+                    text: 'GOLD BLOCK'
+                },
+                              {
+                    value: 42,
+                    text: 'IRON BLOCK'
+                },
+                              {
+                    value: 56,
+                    text: 'DIAMOND ORE'
+                },
+                {
+                    value: 57,
+                    text: 'DIAMOND BLOCK'
                 }
 
-            ],
-
-            // Dynamic menu: a string naming a function which returns an array as above.
-            // Called each time the menu is opened.
-            menuB: 'getItemsForMenuB'
-        },
+            ] },
+              WOOLS:
+              { acceptReporters: true,
+                    items: [
+                // Static menu: list items which should appear in the menu.
+                {
+                    // Required: the value of the menu item when it is chosen.
+                    value: 0,
+                    // Optional: the human-readable label for this item.
+                    // Use `value` as the text if this is absent.
+                    text: 'WHITE'
+                },
+                {
+                    value: 1,
+                    text: 'ORANGE'
+                },
+                  {
+                    value: 2,
+                    text: 'MAGENTA'
+                },
+                {
+                    value: 3,
+                    text: 'LIGHT BLUE'
+                },
+                {
+                    value: 4,
+                    text: 'YELLOW'
+                },
+                {
+                    value: 5,
+                    text: 'LIME'
+                },
+                     {
+                    value: 6,
+                    text: 'PINK'
+                },
+                {
+                    value: 7,
+                    text: 'GREY'
+                },
+                {
+                    value: 8,
+                    text: 'LIGHT GREY'
+                },
+                              {
+                    value: 9,
+                    text: 'CYAN'
+                },
+                              {
+                    value: 10,
+                    text: 'PURPLE'
+                },
+                {
+                    value: 11,
+                    text: 'BLUE'
+                },
+                {
+                    value: 12,
+                    text: 'BROWN'
+                },
+                {
+                    value: 13,
+                    text: 'GREEN'
+                },
+                {
+                    value: 14,
+                    text: 'RED'
+                },
+                {
+                    value: 15,
+                    text: 'BLACK'
+                }
+            ]
+        }
+          },
         };
     }
 
@@ -346,7 +604,49 @@ class Scratch3YourExtension {
     }
 
          setBlock ({ X, Y, Z, BLOCK }) {
-  return fetch('http://localhost:5000/setBlock?x=' + X+"&y="+Y+"&z="+Z+"&block="+BLOCK)
+  return fetch('http://localhost:5000/setBlock?x=' + X+"&y="+Y+"&z="+Z+"&block="+BLOCK+"&data=0")
+    .then((response) => {
+        const data = response.json();
+        return data;
+         })
+    .then((data) => {
+        console.log(data);
+        if (data.hasOwnProperty("msg")) 
+            return data["msg"];})
+    .catch((e) => {console.log("ERROR :"+e); 
+                    return false;});
+    }
+
+             setBlocks ({ X, Y, Z, BLOCK, X1, Y1, Z1 }) {
+  return fetch('http://localhost:5000/setBlocks?x=' + X+"&y="+Y+"&z="+Z+"&block="+BLOCK+"&x1="+X1+"&y1="+Y1+"&z1="+Z1+"&data=0")
+    .then((response) => {
+        const data = response.json();
+        return data;
+         })
+    .then((data) => {
+        console.log(data);
+        if (data.hasOwnProperty("msg")) 
+            return data["msg"];})
+    .catch((e) => {console.log("ERROR :"+e); 
+                    return false;});
+    }
+
+    setWoolwithData ({ WOOL, X, Y, Z}) {
+          return fetch('http://localhost:5000/setBlock?x=' + X+"&y="+Y+"&z="+Z+"&block=35&data="+WOOL)
+    .then((response) => {
+        const data = response.json();
+        return data;
+         })
+    .then((data) => {
+        console.log(data);
+        if (data.hasOwnProperty("msg")) 
+            return data["msg"];})
+    .catch((e) => {console.log("ERROR :"+e); 
+                    return false;});
+    }
+
+    setWoolcubewithData ({ X, Y, Z, WOOL, X1, Y1, Z1 }) {
+  return fetch('http://localhost:5000/setBlocks?x=' + X+"&y="+Y+"&z="+Z+"&block=35"+"&x1="+X1+"&y1="+Y1+"&z1="+Z1+"&data="+WOOL)
     .then((response) => {
         const data = response.json();
         return data;
